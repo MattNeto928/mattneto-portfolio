@@ -83,8 +83,8 @@ const Portfolio: React.FC = () => {
   const scrollToProject = (projectId: string) => {
     const projectElement = projectRefs.current[projectId];
     if (projectElement) {
-      projectElement.scrollIntoView({ 
-        behavior: 'smooth', 
+      projectElement.scrollIntoView({
+        behavior: 'smooth',
         block: 'start'
       });
     }
@@ -119,9 +119,14 @@ const Portfolio: React.FC = () => {
         </div>
 
         {/* Projects */}
-        {projects.map((project, index) => (
-          <div key={project.id} ref={(el) => (projectRefs.current[project.id] = el)}>
-            <ProjectSection project={project} index={index} />
+        {projects.map((project) => (
+          <div
+            key={project.id}
+            ref={(el: HTMLDivElement | null) => {
+              if (el) projectRefs.current[project.id] = el;
+            }}
+          >
+            <ProjectSection project={project} />
           </div>
         ))}
       </div>
@@ -141,8 +146,8 @@ const Portfolio: React.FC = () => {
               <li><Button variant="link" className="text-white">Home</Button></li>
               <li><Button variant="link" className="text-white">About</Button></li>
               <li className="relative">
-                <Button 
-                  variant="link" 
+                <Button
+                  variant="link"
                   className="text-white flex items-center"
                   onClick={() => setShowProjectsDropdown(!showProjectsDropdown)}
                 >
@@ -183,8 +188,7 @@ const Portfolio: React.FC = () => {
   );
 };
 
-const ProjectSection: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
+const ProjectSection: React.FC<{ project: Project }> = ({ project }) => {  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -199,7 +203,7 @@ const ProjectSection: React.FC<{ project: Project; index: number }> = ({ project
       style={{ opacity, scale }}
       className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${project.imageUrl})` }}
       />
