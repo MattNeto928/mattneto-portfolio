@@ -1,20 +1,17 @@
 import './globals.css'
+import Layout from '@/components/Layout'
 import { Baskervville } from 'next/font/google'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+export const metadata = {
+  title: 'Matthew J. Neto Portfolio',
+  description: 'Photographer | Videographer | Engineer | Georgia Tech',
+}
 
 const basker = Baskervville({
   subsets: ['latin'],
   weight: ['400', '400'],
   variable: '--font-basker',
 })
-
-export const metadata: Metadata = {
-  title: 'Matthew J. Neto',
-  description: 'A showcase of my work and skills',
-}
 
 export default function RootLayout({
   children,
@@ -23,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={basker.variable}>
-      <body className={inter.className}>{children}</body>
+      <body className={basker.className}>
+        <Layout>{children}</Layout>
+      </body>
     </html>
   )
 }
