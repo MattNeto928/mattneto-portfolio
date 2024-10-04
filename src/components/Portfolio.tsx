@@ -18,28 +18,28 @@ const projects: Project[] = [
     title: "Sydney, Australia",
     description: "Aussie Aussie Aussie, Oi Oi Oi!",
     imageUrl: "/assets/images/sydney.jpg",
-    link: "/project1"
+    link: "/sydney"
   },
   {
     id: "brisbane",
     title: "Brisbane, Australia",
     description: "Crikey!",
     imageUrl: "/assets/images/croc.jpg",
-    link: "/project1"
+    link: "/brisbane"
   },
   {
     id: "nz",
     title: "New Zealand",
     description: "The land of the Kiwis!",
     imageUrl: "/assets/images/wanaka.jpg",
-    link: "/project1"
+    link: "/nz"
   },
   {
     id: "bali",
     title: "Bali, Indonesia",
     description: "Explore the enriching culture found in Bali",
     imageUrl: "/assets/images/bali_rocks.jpg",
-    link: "/project1"
+    link: "/bali"
   }
 ];
 
@@ -58,7 +58,7 @@ const Portfolio: React.FC = () => {
           playsInline
           className="fixed top-0 left-0 w-full h-full object-cover"
         >
-          <source src="https://xxyyovnyzauqq4wo.public.blob.vercel-storage.com/tech-naAKnX5xi8rprSxS5M3dTUNUunW2fM.mp4" type="video/mp4" />
+          <source src="https://mattneto-portfolio.s3.us-east-2.amazonaws.com/basketball_compressed.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </motion.div>

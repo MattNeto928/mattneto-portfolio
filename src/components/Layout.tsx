@@ -21,28 +21,28 @@ const projects: Project[] = [
     title: "Sydney, Australia",
     description: "Aussie Aussie Aussie, Oi Oi Oi!",
     imageUrl: "/assets/images/sydney.jpg",
-    link: "/project1"
+    link: "/sydney"
   },
   {
     id: "brisbane",
     title: "Brisbane, Australia",
     description: "Crikey!",
     imageUrl: "/assets/images/croc.jpg",
-    link: "/project1"
+    link: "/brisbane"
   },
   {
     id: "nz",
     title: "New Zealand",
     description: "The land of the Kiwis!",
     imageUrl: "/assets/images/wanaka.jpg",
-    link: "/project1"
+    link: "/newzealand"
   },
   {
     id: "bali",
     title: "Bali, Indonesia",
     description: "Explore the enriching culture found in Bali",
     imageUrl: "/assets/images/bali_rocks.jpg",
-    link: "/project1"
+    link: "/bali"
   }
 ];
 
