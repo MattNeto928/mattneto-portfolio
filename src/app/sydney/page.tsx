@@ -2,7 +2,6 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Button } from "@/components/ui/button"
 
 interface Section {
   id: string;
@@ -92,9 +91,6 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ title, description, ima
       <div className="relative z-10 max-w-4xl mx-auto p-8 text-white">
         <h2 className="text-4xl font-bold mb-4">{title}</h2>
         <p className="text-xl mb-6">{description}</p>
-        <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-gray-900">
-          Learn More
-        </Button>
       </div>
     </motion.div>
   );
