@@ -43,6 +43,20 @@ const projects: Project[] = [
     description: "Explore the enriching culture found in Bali",
     imageUrl: "/assets/images/bali_rocks.jpg",
     link: "/bali"
+  },
+  {
+    id: "rome",
+    title: "Rome, Italy",
+    description: "View the vast history found in Rome",
+    imageUrl: "/assets/images/jesus.jpg",
+    link: "/rome"
+  },
+  {
+    id: "morocco",
+    title: "Morocco",
+    description: "Explore the Sahara Desert from the heart of Morocco",
+    imageUrl: "/assets/images/morocco.jpg",
+    link: "/morocco"
   }
 ];
 

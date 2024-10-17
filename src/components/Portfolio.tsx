@@ -40,6 +40,20 @@ const projects: Project[] = [
     description: "Explore the enriching culture found in Bali",
     imageUrl: "/assets/images/bali_rocks.jpg",
     link: "/bali"
+  },
+  {
+    id: "rome",
+    title: "Rome, Italy",
+    description: "View the vast history found in Rome",
+    imageUrl: "/assets/images/jesus.jpg",
+    link: "/rome"
+  },
+  {
+    id: "morocco",
+    title: "Morocco",
+    description: "Explore the Sahara Desert from the heart of Morocco",
+    imageUrl: "/assets/images/morocco.jpg",
+    link: "/morocco"
   }
 ];
 
@@ -101,7 +115,7 @@ const ProjectSection: React.FC<{ project: Project }> = ({ project }) => {
       style={{ opacity, scale }}
       className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      <div
+      <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${project.imageUrl})` }}
       />
