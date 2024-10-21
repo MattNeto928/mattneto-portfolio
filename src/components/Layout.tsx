@@ -15,6 +15,18 @@ interface Project {
   link: string;
 }
 
+interface Video {
+  id: string;
+  title: string;
+}
+
+const videos: Video[] = [
+  { id: "milford_sound", title: "Milford Sound" },
+  { id: "wanaka", title: "Wanaka" },
+  { id: "topgun", title: "Gold Coast Football"},
+  { id: "north_stradbroke", title: "North Stradbroke Diving"},
+];
+
 const projects: Project[] = [
   {
     id: "sydney",
@@ -64,15 +76,16 @@ const projects: Project[] = [
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [showNav, setShowNav] = useState<boolean>(false);
   const [showProjectsDropdown, setShowProjectsDropdown] = useState<boolean>(false);
+  const [showVideosDropdown, setShowVideosDropdown] = useState<boolean>(false);
   const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      if (event.clientY <= 50 || showProjectsDropdown) {
+      if (event.clientY <= 50 || showProjectsDropdown || showVideosDropdown) {
         setShowNav(true);
-      } else if (!showProjectsDropdown) {
+      } else if (!showProjectsDropdown && !showVideosDropdown) {
         setShowNav(false);
       }
     };
@@ -80,6 +93,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setShowProjectsDropdown(false);
+        setShowVideosDropdown(false);
         if (event.clientY > 50) {
           setShowNav(false);
         }
@@ -93,7 +107,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showProjectsDropdown]);
+  }, [showProjectsDropdown, showVideosDropdown]);
 
   useEffect(() => {
     if (pathname === '/' && window.location.hash) {
@@ -109,6 +123,18 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToVideo = (videoId: string) => {
+    setShowVideosDropdown(false);
+    if (pathname === '/videos') {
+      const element = document.getElementById(videoId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      router.push(`/videos#${videoId}`);
+    }
   };
 
   const scrollToProject = (projectId: string) => {
@@ -150,6 +176,36 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <Button variant="link" className="text-white text-xl">Home</Button>
                   </a>
                 </Link>
+              </li>
+              <li className="relative">
+                <Button
+                  variant="link"
+                  className="text-white flex items-center text-xl"
+                  onClick={() => setShowVideosDropdown(!showVideosDropdown)}
+                >
+                  Videography <ChevronDown className="ml-1" />
+                </Button>
+                {showVideosDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                  >
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                      {videos.map((video) => (
+                        <a
+                          key={video.id}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+                          role="menuitem"
+                          onClick={() => scrollToVideo(video.id)}
+                        >
+                          {video.title}
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </li>
               <li className="relative">
                 <Button

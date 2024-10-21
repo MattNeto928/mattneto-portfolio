@@ -9,7 +9,7 @@ export const metadata = {
 
 const basker = Baskervville({
   subsets: ['latin'],
-  weight: ['400', '400'],
+  weight: ['400'],
   variable: '--font-basker',
 })
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={basker.variable}>
-      <body className={basker.className}>
+      <body >
         <Layout>{children}</Layout>
       </body>
     </html>

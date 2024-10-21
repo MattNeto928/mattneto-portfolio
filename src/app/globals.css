@@ -4,6 +4,8 @@
  
 @layer base {
   :root {
+    font-family: var(--font-basker);
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -34,6 +36,10 @@
  
     --radius: 0.5rem;
   }
+
+  .font-basker {
+  font-family: var(--font-basker);
+}
  
   .dark {
     --background: 222.2 84% 4.9%;
