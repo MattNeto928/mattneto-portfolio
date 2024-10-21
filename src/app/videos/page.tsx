@@ -23,7 +23,7 @@ const videos: Video[] = [
     {
         id: "topgun",
         title: "Gold Coast Football",
-        youtubeId: "6QDmSWH6bcoU"
+        youtubeId: "6QDmSWH6bco"
     },
     {
       id: "north_stradbroke",
