@@ -21,10 +21,12 @@ interface Video {
 }
 
 const videos: Video[] = [
+  { id: "tech_duke", title: "Tech Basketball" },
   { id: "milford_sound", title: "Milford Sound" },
   { id: "wanaka", title: "Wanaka" },
   { id: "topgun", title: "Gold Coast Football"},
   { id: "north_stradbroke", title: "North Stradbroke Diving"},
+  { id: "holi", title: "Sydney Holi Festival"},
 ];
 
 const projects: Project[] = [
@@ -160,7 +162,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   return (
-    <div className="relative min-h-screen w-screen overflow-x-hidden bg-gray-950 text-white">
+    <div className="relative min-h-screen w-screen overflow-x-hidden bg-gray-950 text-white font-basker">
       {/* Fixed container for both nav elements */}
       <div className="fixed top-0 left-0 right-0 z-20">
         {/* Nav Indicator */}
@@ -177,7 +179,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           }}
         >
           <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-1 rounded-b-full flex items-center gap-2 cursor-pointer">
-            <span className="text-white text-sm">Menu</span>
+            <span className="text-white text-sm font-basker">Menu</span>
             <ChevronUp className="w-4 h-4 text-white" />
           </div>
         </motion.div>
