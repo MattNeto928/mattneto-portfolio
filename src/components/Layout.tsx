@@ -140,6 +140,30 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setShowVideosDropdown(false);
   };
 
+  const scrollToVideo = (videoId: string) => {
+    setShowVideosDropdown(false);
+    if (pathname === '/videos') {
+      const element = document.getElementById(videoId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      router.push(`/videos#${videoId}`);
+    }
+  };
+
+  const scrollToProject = (projectId: string) => {
+    setShowProjectsDropdown(false);
+    if (pathname === '/') {
+      const element = document.getElementById(projectId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      router.push(`/#${projectId}`);
+    }
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -214,6 +238,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                               key={video.id}
                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                               role="menuitem"
+                              onClick={() => scrollToVideo(video.id)}
                             >
                               {video.title}
                             </a>
@@ -250,6 +275,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                               key={project.id}
                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                               role="menuitem"
+                              onClick={() => scrollToProject(project.id)}
                             >
                               {project.title}
                             </a>
