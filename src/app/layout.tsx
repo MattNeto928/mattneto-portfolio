@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import { Baskervville } from 'next/font/google'
 
 export const metadata = {
-  title: 'Matthew J. Neto Portfolio',
+  title: 'Matthew J. Neto',
   description: 'Photographer | Videographer | Engineer | Georgia Tech',
 }
 

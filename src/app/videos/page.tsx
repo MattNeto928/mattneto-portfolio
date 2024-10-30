@@ -17,13 +17,23 @@ const videos: Video[] = [
     youtubeId: "n0fEExNvJRs"
   },
   {
+    id: "pacific_program",
+    title: "Pacific Program Recap",
+    youtubeId: "SEwn2nPUYN8"
+  },
+  {
+    id: "kaka_point",
+    title: "Kaka Point, New Zealand",
+    youtubeId: "lYdnldnqAUo"
+  },
+  {
     id: "milford_sound",
-    title: "Milford Sound",
+    title: "Milford Sound, New Zealand",
     youtubeId: "LF32rNuRlfQ"
   },
   {
     id: "wanaka",
-    title: "Wanaka",
+    title: "Wanaka, New Zealand",
     youtubeId: "lzFLL-kebR4"
   },
   {
@@ -63,14 +73,14 @@ const VideosPage: React.FC = () => {
       {/* Aurora Background */}
       <div className="fixed inset-0 z-0">
         <AuroraBackground className="opacity-40" >
-        <motion.div
-        initial={{ opacity: 0.0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.3,
-          duration: 0.8,
-          ease: "easeInOut",
-        }} />
+          <motion.div
+            initial={{ opacity: 0.0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }} />
         </AuroraBackground>
       </div>
 

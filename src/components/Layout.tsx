@@ -22,6 +22,8 @@ interface Video {
 
 const videos: Video[] = [
   { id: "tech_duke", title: "Tech Basketball" },
+  { id: "pacific_program", title: "Pacific Program Recap" },
+  { id: "kaka_point", title: "Kaka Point" },
   { id: "milford_sound", title: "Milford Sound" },
   { id: "wanaka", title: "Wanaka" },
   { id: "topgun", title: "Gold Coast Football"},
