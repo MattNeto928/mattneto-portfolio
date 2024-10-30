@@ -87,7 +87,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      if (event.clientY <= 50 || showProjectsDropdown || showVideosDropdown) {
+      if (event.clientY <= 50) {
         setShowNav(true);
         setIsHovering(true);
       } else if (!showProjectsDropdown && !showVideosDropdown) {
@@ -96,24 +96,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setShowProjectsDropdown(false);
-        setShowVideosDropdown(false);
-        if (event.clientY > 50) {
-          setShowNav(false);
-          setIsHovering(false);
-        }
-      }
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [showProjectsDropdown, showVideosDropdown]);
 
   useEffect(() => {
@@ -128,32 +112,36 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [pathname]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const scrollToVideo = (videoId: string) => {
+  const handleVideographyClick = () => {
     setShowVideosDropdown(false);
-    if (pathname === '/videos') {
-      const element = document.getElementById(videoId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      router.push(`/videos#${videoId}`);
-    }
+    router.push('/videos');
   };
 
-  const scrollToProject = (projectId: string) => {
+  const handleAdventuresClick = () => {
     setShowProjectsDropdown(false);
     if (pathname === '/') {
-      const element = document.getElementById(projectId);
+      const firstProject = projects[0];
+      const element = document.getElementById(firstProject.id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      router.push(`/#${projectId}`);
+      router.push(`/#${projects[0].id}`);
     }
+  };
+
+  const handleVideoHover = () => {
+    setShowVideosDropdown(true);
+    setShowProjectsDropdown(false);
+  };
+
+  const handleProjectHover = () => {
+    setShowProjectsDropdown(true);
+    setShowVideosDropdown(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -165,9 +153,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden bg-gray-950 text-white font-basker">
-      {/* Fixed container for both nav elements */}
       <div className="fixed top-0 left-0 right-0 z-20">
-        {/* Nav Indicator */}
         <motion.div 
           className="absolute top-0 left-0 right-0 flex justify-center items-start"
           initial={{ opacity: 1, y: 0 }}
@@ -175,18 +161,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             opacity: showNav ? 0 : 1,
             y: isHovering ? -100 : 0
           }}
-          transition={{ 
-            duration: 0.3,
-            opacity: { duration: 0.2 }
-          }}
+          transition={{ duration: 0.3 }}
         >
-          <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-1 rounded-b-full flex items-center gap-2 cursor-pointer">
+          <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-1 rounded-b-full flex items-center gap-2">
             <span className="text-white text-sm font-basker">Menu</span>
             <ChevronUp className="w-4 h-4 text-white" />
           </div>
         </motion.div>
 
-        {/* Navbar */}
         <AnimatePresence>
           {showNav && (
             <motion.nav
@@ -205,65 +187,77 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     </a>
                   </Link>
                 </li>
-                <li className="relative">
-                  <Button
-                    variant="link"
-                    className="text-white flex items-center text-xl"
-                    onClick={() => setShowVideosDropdown(!showVideosDropdown)}
-                  >
-                    Videography <ChevronDown className="ml-1" />
-                  </Button>
-                  {showVideosDropdown && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                <li className="relative group">
+                  <div className="relative pt-2 pb-8 -mb-8">
+                    <Button
+                      variant="link"
+                      className="text-white flex items-center text-xl"
+                      onClick={handleVideographyClick}
+                      onMouseEnter={handleVideoHover}
                     >
-                      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        {videos.map((video) => (
-                          <a
-                            key={video.id}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-                            role="menuitem"
-                            onClick={() => scrollToVideo(video.id)}
-                          >
-                            {video.title}
-                          </a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
+                      Videography <ChevronDown className="ml-1" />
+                    </Button>
+                  </div>
+                  <AnimatePresence>
+                    {showVideosDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                        onMouseEnter={() => setShowVideosDropdown(true)}
+                        onMouseLeave={() => setShowVideosDropdown(false)}
+                      >
+                        <div className="py-1" role="menu" aria-orientation="vertical">
+                          {videos.map((video) => (
+                            <a
+                              key={video.id}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+                              role="menuitem"
+                            >
+                              {video.title}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </li>
-                <li className="relative">
-                  <Button
-                    variant="link"
-                    className="text-white flex items-center text-xl"
-                    onClick={() => setShowProjectsDropdown(!showProjectsDropdown)}
-                  >
-                    Adventures <ChevronDown className="ml-1" />
-                  </Button>
-                  {showProjectsDropdown && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                <li className="relative group">
+                  <div className="relative pt-2 pb-8 -mb-8">
+                    <Button
+                      variant="link"
+                      className="text-white flex items-center text-xl"
+                      onClick={handleAdventuresClick}
+                      onMouseEnter={handleProjectHover}
                     >
-                      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        {projects.map((project) => (
-                          <a
-                            key={project.id}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-                            role="menuitem"
-                            onClick={() => scrollToProject(project.id)}
-                          >
-                            {project.title}
-                          </a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
+                      Adventures <ChevronDown className="ml-1" />
+                    </Button>
+                  </div>
+                  <AnimatePresence>
+                    {showProjectsDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                        onMouseEnter={() => setShowProjectsDropdown(true)}
+                        onMouseLeave={() => setShowProjectsDropdown(false)}
+                      >
+                        <div className="py-1" role="menu" aria-orientation="vertical">
+                          {projects.map((project) => (
+                            <a
+                              key={project.id}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+                              role="menuitem"
+                            >
+                              {project.title}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </li>
                 <li>
                   <Link href="/contact" passHref legacyBehavior>
@@ -275,8 +269,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           )}
         </AnimatePresence>
       </div>
-
-      {/* Page Content */}
       {children}
     </div>
   );
